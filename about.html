@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Me | My Dark Romance World</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#0b0b0b;
+  color:#eee;
+  overflow:hidden;
+}
+
+/* ===== Container ===== */
+.about-container{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===== Card ===== */
+.about-card{
+  width:85%;
+  max-width:1100px;
+  background:#111;
+  border-radius:20px;
+  padding:50px;
+  box-shadow:0 0 40px rgba(177,18,38,0.25);
+}
+
+/* ===== Title Row ===== */
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.title{
+  font-size:2.4rem;
+  color:#b11226;
+  position:relative;
+}
+
+.title::after{
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-8px;
+  width:70%;
+  height:3px;
+  background:#b11226;
+}
+
+/* ===== Buttons ===== */
+.nav-btn{
+  background:none;
+  border:1px solid #b11226;
+  color:#b11226;
+  padding:8px 20px;
+  border-radius:20px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.nav-btn:hover{
+  background:#b11226;
+  color:#000;
+}
+
+/* ===== Content ===== */
+.content{
+  margin-top:50px;
+  display:flex;
+  gap:50px;
+  align-items:center;
+}
+
+/* ===== Image ===== */
+.image-box{
+  width:300px;
+  height:380px;
+  border-radius:20px;
+  overflow:hidden;
+  transform-style:preserve-3d;
+  transition:0.8s ease;
+  box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+.image-box.rotate{
+  transform:rotateY(90deg);
+}
+
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ===== Text ===== */
+.text-box{
+  flex:1;
+  font-size:1.05rem;
+  line-height:1.9;
+  color:#ccc;
+  min-height:180px;
+  white-space:pre-line;
+}
+
+/* ===== Back Home ===== */
+.home-link{
+  position:absolute;
+  bottom:30px;
+  left:30px;
+  color:#777;
+  text-decoration:none;
+  font-size:0.85rem;
+}
+
+.home-link:hover{
+  color:#b11226;
+}
+</style>
+</head>
+
+<body>
+
+<a class="home-link" href="index.html">← Back to Home</a>
+
+<div class="about-container">
+  <div class="about-card">
+
+    <div class="title-row">
+      <h1 class="title" id="sectionTitle">Personal Information</h1>
+      <button class="nav-btn" id="nextBtn">Next</button>
+    </div>
+
+    <div class="content">
+      <div class="image-box" id="imageBox">
+        <img id="sectionImage" src="images/me1.jpg">
+      </div>
+
+      <div class="text-box" id="textBox"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const sections = [
+  {
+    title:"Personal Information",
+    image:"images/me1.jpg",
+    text:"আমি একজন নীরব, soft-hearted মানুষ।\nআমি darkness-এর মাঝে beauty খুঁজি।\nশব্দের চেয়ে অনুভূতিতে বেশি কথা বলি।"
+  },
+  {
+    title:"My Vibe",
+    image:"images/me2.jpg",
+    text:"Low light, slow music, rainy nights।\nআমি শান্ত vibe ভালোবাসি,\nযেখানে মন নিজেই কথা বলে।"
+  },
+  {
+    title:"My Aesthetic Mindset",
+    image:"images/me3.jpg",
+    text:"Black, red, silence আর depth।\nআমার aesthetic মানে perfection না,\nআমার aesthetic মানে feeling।"
+  },
+  {
+    title:"My Feelings",
+    image:"images/me4.jpg",
+    text:"আমি গভীরভাবে অনুভব করি।\nকিছু না বলেও অনেক কিছু ভাঙে।\nএই অনুভূতিগুলোই আমাকে বানিয়েছে।"
+  }
+];
+
+let index = 0;
+let charIndex = 0;
+let typingInterval;
+
+const titleEl = document.getElementById("sectionTitle");
+const textEl = document.getElementById("textBox");
+const imgEl = document.getElementById("sectionImage");
+const imgBox = document.getElementById("imageBox");
+const btn = document.getElementById("nextBtn");
+
+function typeText(text){
+  clearInterval(typingInterval);
+  textEl.innerHTML = "";
+  charIndex = 0;
+
+  typingInterval = setInterval(()=>{
+    if(charIndex < text.length){
+      textEl.innerHTML += text.charAt(charIndex);
+      charIndex++;
+    }else{
+      clearInterval(typingInterval);
+    }
+  },35);
+}
+
+function loadSection(){
+  titleEl.innerText = sections[index].title;
+
+  imgBox.classList.add("rotate");
+  setTimeout(()=>{
+    imgEl.src = sections[index].image;
+    imgBox.classList.remove("rotate");
+  },400);
+
+  typeText(sections[index].text);
+
+  btn.innerText = index === sections.length - 1 ? "Back" : "Next";
+}
+
+btn.onclick = ()=>{
+  if(index === sections.length - 1){
+    index = 0;
+  }else{
+    index++;
+  }
+  loadSection();
+};
+
+loadSection();
+</script>
+
+</body>
+</html>
